@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripPlaner", "TripPlaner\TripPlaner.csproj", "{B3A7B952-34FD-4516-B468-93A78FCF47B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripPlaner.DAL", "TripPlaner.DAL\TripPlaner.DAL.csproj", "{D7260BC6-C7B3-4BF7-951B-CA9C761B9751}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripPlaner.Services", "TripPlaner.Services\TripPlaner.Services.csproj", "{C13E708E-F9E3-42CF-A233-D7775F33581E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3A7B952-34FD-4516-B468-93A78FCF47B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A7B952-34FD-4516-B468-93A78FCF47B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3A7B952-34FD-4516-B468-93A78FCF47B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A7B952-34FD-4516-B468-93A78FCF47B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7260BC6-C7B3-4BF7-951B-CA9C761B9751}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7260BC6-C7B3-4BF7-951B-CA9C761B9751}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7260BC6-C7B3-4BF7-951B-CA9C761B9751}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7260BC6-C7B3-4BF7-951B-CA9C761B9751}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C13E708E-F9E3-42CF-A233-D7775F33581E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C13E708E-F9E3-42CF-A233-D7775F33581E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C13E708E-F9E3-42CF-A233-D7775F33581E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C13E708E-F9E3-42CF-A233-D7775F33581E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
