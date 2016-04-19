@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using TripPlaner.DAL.Entities;
 
 namespace TripPlaner.DAL.Repositories
@@ -26,12 +25,12 @@ namespace TripPlaner.DAL.Repositories
             _unitOfWork = unitOfWork;
         }
 
-        public TEntity Insert(TEntity entity)
+        public virtual TEntity Insert(TEntity entity)
         {
             return Set.Add(entity);
         }
 
-        public TEntity Update(TEntity entity)
+        public virtual TEntity Update(TEntity entity)
         {
             AttachIfNot(entity);
             DbContext.Entry(entity).State = EntityState.Modified;
@@ -39,19 +38,34 @@ namespace TripPlaner.DAL.Repositories
             return entity;
         }
 
-        public void Delete(int id)
+        public virtual void Delete(int id)
         {
-            throw new NotImplementedException();
+            var entity = Set.Find(id);
+            if (entity == null)
+                return;
+            
+            Delete(entity);
         }
 
-        public TEntity Find(int id)
+        public virtual void Delete(TEntity entity)
         {
-            throw new NotImplementedException();
+            AttachIfNot(entity);
+            Set.Remove(entity);
         }
 
-        public IQueryable<TEntity> AsQueryable()
+        public virtual TEntity Find(int id)
         {
-            throw new NotImplementedException();
+            return Set.Find(id);
+        }
+
+        public virtual async Task<TEntity> FindAsync(int id)
+        {
+            return await Set.FindAsync(id);
+        }
+
+        public virtual IQueryable<TEntity> AsQueryable()
+        {
+            return Set.AsQueryable();
         }
 
         /// <summary>

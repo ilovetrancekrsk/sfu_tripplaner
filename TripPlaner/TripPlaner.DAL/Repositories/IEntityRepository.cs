@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 
 namespace TripPlaner.DAL.Repositories
 {
@@ -10,8 +11,12 @@ namespace TripPlaner.DAL.Repositories
 
         void Delete(int id);
 
+        void Delete(TEntity entity);
+
         TEntity Find(int id);
 
+        Task<TEntity> FindAsync(int id); 
+        
         IQueryable<TEntity> AsQueryable();
     }
 }

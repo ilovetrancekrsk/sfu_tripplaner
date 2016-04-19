@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EntityService.cs" />
+    <Compile Include="Services\IEntityService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TripPlaner.DAL\TripPlaner.DAL.csproj">

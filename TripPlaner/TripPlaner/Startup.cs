@@ -8,6 +8,7 @@ namespace TripPlaner
     {
         public void Configuration(IAppBuilder app)
         {
+            app.UseAutofacContainer();
             ConfigureAuth(app);
         }
     }

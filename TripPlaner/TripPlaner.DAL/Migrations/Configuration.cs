@@ -1,3 +1,5 @@
+using TripPlaner.DAL.Entities;
+
 namespace TripPlaner.DAL.Migrations
 {
     using System;
@@ -16,16 +18,29 @@ namespace TripPlaner.DAL.Migrations
         {
             //  This method will be called after migrating to the latest version.
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            context.Placemarks.AddOrUpdate(new Placemark
+            {
+                Arrival = DateTime.Now.AddDays(4),
+                Departure = DateTime.Now.AddDays(3),
+                Name = "Point 1",
+                Description = "Description of Point 1",
+                IsVisited = false,
+                Latitude = "123123.33",
+                Longitude = "78654.23",
+                Type = PlacemarkTypes.Attraction
+            });
+
+            context.Placemarks.AddOrUpdate(new Placemark
+            {
+                Arrival = DateTime.Now.AddDays(14),
+                Departure = DateTime.Now.AddDays(11),
+                Name = "Point 2",
+                Description = "Description of Point 2",
+                IsVisited = false,
+                Latitude = "2343123.33",
+                Longitude = "786654.23",
+                Type = PlacemarkTypes.Attraction
+            });
         }
     }
 }
