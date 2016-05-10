@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
 using Owin;
@@ -28,6 +25,15 @@ namespace TripPlaner
 
         public static IAppBuilder UseAutofacContainer(this IAppBuilder app)
         {
+            var container = CreateContainer(app);
+            DependencyResolver.SetResolver(CreateAutofacDependencyResolver(app));
+
+            app.UseAutofacMiddleware(container);
+            app.UseAutofacMvc();
+            app.UseAutofacWebApi(GlobalConfiguration.Configuration);
+
+            GlobalConfiguration.Configuration.DependencyResolver = CreateAutofacWebApiDependencyResolver(app);
+
             return app;
         }
 
@@ -42,7 +48,7 @@ namespace TripPlaner
             return _autofacDependencyResolver;
         }
 
-        public static AutofacWebApiDependencyResolver CreAutofacWebApiDependencyResolver(IAppBuilder app)
+        public static AutofacWebApiDependencyResolver CreateAutofacWebApiDependencyResolver(IAppBuilder app)
         {
             if (_autofacWebApiDependencyResolver != null)
                 return _autofacWebApiDependencyResolver;
@@ -79,7 +85,7 @@ namespace TripPlaner
         private static void RegisterContext(IAppBuilder app, ContainerBuilder builder)
         {
             builder.RegisterType<TripPlanerDbContext>().AsSelf().InstancePerRequest();
-            builder.RegisterType<IUnitOfWork>().As<UnitOfWork>().InstancePerRequest();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
         }
 
         private static void RegisterInfrastructure(IAppBuilder app, ContainerBuilder builder)
@@ -101,7 +107,7 @@ namespace TripPlaner
 
         private static void RegisterFrameworks(IAppBuilder app, ContainerBuilder builder)
         {
-            builder.RegisterType<TripPlanerUserStore>().As<UserStore<Traveler>>().InstancePerRequest();
+            builder.RegisterType<TripPlanerUserStore>().As<IUserStore<Traveler>>().InstancePerRequest();
             builder.RegisterType<TripPlanerUserManager>().AsSelf().InstancePerRequest();
             builder.RegisterType<TripPlanerSignInManager>().AsSelf().InstancePerRequest();
 
@@ -114,13 +120,13 @@ namespace TripPlaner
         private static void RegisterTypes(IAppBuilder app, ContainerBuilder builder)
         {
             // Repositories
-            builder.RegisterGeneric(typeof (IEntityRepository<>))
-                   .As(typeof (EntityRepository<>))
+            builder.RegisterGeneric(typeof (EntityRepository<>))
+                   .As(typeof (IEntityRepository<>))
                    .InstancePerRequest();
 
             // Services
-            builder.RegisterGeneric(typeof(IEntityService<>))
-                   .As(typeof(EntityService<>))
+            builder.RegisterGeneric(typeof(EntityService<>))
+                   .As(typeof(IEntityService<>))
                    .InstancePerRequest();
 
             //...

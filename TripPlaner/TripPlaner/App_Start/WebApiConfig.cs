@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.OData.Builder;
+using System.Web.OData.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using TripPlaner.DAL.Entities;
 
 namespace TripPlaner
 {
@@ -11,6 +16,12 @@ namespace TripPlaner
         {
             // Web API configuration and services
 
+            var json = config.Formatters.JsonFormatter;
+            json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            json.SerializerSettings.Formatting = Formatting.None;
+            json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
@@ -19,6 +30,18 @@ namespace TripPlaner
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            ODataModelBuilder builder = new ODataConventionModelBuilder();
+
+            builder.EntitySet<Placemark>("Placemarks").EntityType.HasKey(_ => _.Id);
+
+            config.MapODataServiceRoute(
+                routeName: "ODataRoute",
+                routePrefix: "odata",
+                model: builder.GetEdmModel());
+
+  
+            config.DependencyResolver = AppBuilderExtensions.CreateAutofacWebApiDependencyResolver(null);
         }
     }
 }

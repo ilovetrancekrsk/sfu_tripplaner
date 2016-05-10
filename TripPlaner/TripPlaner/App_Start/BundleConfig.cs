@@ -25,7 +25,17 @@ namespace TripPlaner
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/leaflet.css",
+                      "~/Content/leaflet-routing-machine.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/map").Include(
+                "~/Scripts/leaflet.js",
+                "~/Scripts/leaflet-routing-machine.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                "~/Scripts/app/Control.Geocoder.js",
+                "~/Scripts/app/app.js"));
         }
     }
 }
