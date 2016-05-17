@@ -22,10 +22,12 @@
     <div id="map" class="map">
     </div>
 
-    <div class="panel">
+    <div class="panel" data-bind="visible: placemarkPanel">
         <div data-bind="with: activePlacemark()">
-            <input type="text" data-bind="value: latitude" />
+            <input type="text" data-bind="value: id" />
+            <input type="text" data-bind="value: latitude"/>
             <input type="text" data-bind="value: longitude"/>
         </div>
+        <input type="button" data-bind="click: update" value="update" />
     </div>
 </div>
