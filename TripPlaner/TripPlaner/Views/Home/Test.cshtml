@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            var Application = function() {
+                var $scope = {};
+                $scope.placemarks = ko.observableArray([]);
+                $scope.search = ko.observable('');
+
+                $scope.run = function(data, e) {
+                    setTimeout(function() {
+                        var url = "http://localhost:60860/odata/Placemarks?$select=Name&$filter=contains(Name,'" + $scope.search() + "')";
+                        $.ajax(url, {})
+                            .success(function(data) {
+                                // заполняем коллекцию данными с сервера
+                                $scope.placemarks(data.value);
+                            })
+                            .error(function(p1, p2, p3) {
+                                alert('Error!! ' + p1);
+                            });
+                    }, 0);
+                };
+
+                return $scope;
+            };
+
+            var application = new Application();
+
+            var element = document.getElementById('koElement');
+            if (element) {
+                ko.applyBindings(application, element);
+            }
+        });
+
+    </script>
+}
+
+<h2>Test</h2>
+
+<div id="koElement">
+    <input type="text" data-bind="textInput : search, event: { keyup : run }"/>
+    <button data-bind="click: run">Search</button>
+    <hr/>
+    <ul data-bind="foreach: placemarks">
+        <li>
+            <span data-bind="text: Name"></span>
+        </li>
+    </ul>
+</div>

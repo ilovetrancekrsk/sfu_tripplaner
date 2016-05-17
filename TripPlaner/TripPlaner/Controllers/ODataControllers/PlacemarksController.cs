@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
 using System.Web.OData;
 using System.Web.OData.Routing;
 using TripPlaner.DAL;
@@ -20,7 +17,7 @@ namespace TripPlaner.Controllers.ODataControllers
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        private readonly IEntityService<Placemark> _service; 
+        private readonly IEntityService<Placemark> _service;
 
         public PlacemarksController(IUnitOfWork unitOfWork, IEntityService<Placemark> service)
         {
@@ -52,26 +49,26 @@ namespace TripPlaner.Controllers.ODataControllers
         /// <summary>
         /// Добавление
         /// </summary>
-        /// <param name="placemark">запись</param>
+        /// <param name="data">запись</param>
         /// <returns></returns>
-        public async Task<IHttpActionResult> Post(Placemark placemark)
+        public async Task<IHttpActionResult> Post(Placemark data)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _service.InsertAndSaveAsync(placemark);
-            return Created(placemark);
+            await _service.InsertAndSaveAsync(data);
+            return Created(data);
         }
 
         /// <summary>
         /// Частичное обновление записи
         /// </summary>
         /// <param name="key">ключ</param>
-        /// <param name="placemark">неполная запись</param>
+        /// <param name="data">неполная запись</param>
         /// <returns></returns>
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<Placemark> placemark)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<Placemark> data)
         {
             if (!ModelState.IsValid)
             {
@@ -84,7 +81,7 @@ namespace TripPlaner.Controllers.ODataControllers
                 return NotFound();
             }
 
-            placemark.Patch(entity);
+            data.Patch(entity);
 
             try
             {
@@ -103,22 +100,22 @@ namespace TripPlaner.Controllers.ODataControllers
         /// Полное обновление записи
         /// </summary>
         /// <param name="key">ключ</param>
-        /// <param name="placemark">запись</param>
+        /// <param name="data">запись</param>
         /// <returns></returns>
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Placemark placemark)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, Placemark data)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if (key != placemark.Id)
+            if (key != data.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                await _service.UpdateAndSaveAsync(placemark);
+                await _service.UpdateAndSaveAsync(data);
             }
             catch (Exception)
             {
@@ -126,7 +123,7 @@ namespace TripPlaner.Controllers.ODataControllers
                 throw;
             }
 
-            return Updated(placemark);
+            return Updated(data);
         }
 
         /// <summary>

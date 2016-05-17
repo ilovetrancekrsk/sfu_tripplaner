@@ -6,7 +6,26 @@
 {
     @Scripts.Render("~/bundles/map")
     @Scripts.Render("~/bundles/app")
-}
 
-<div id="map" class="map">
+    <script type="text/javascript">
+        var el = document.getElementById('koElement');
+        if (el) {
+            var app = new Application();
+            ko.applyBindings(app, el);
+            app.run();
+        } else {
+            console.error('Can not find element');
+        }
+    </script>
+}
+<div id="koElement">
+    <div id="map" class="map">
+    </div>
+
+    <div class="panel">
+        <div data-bind="with: activePlacemark()">
+            <input type="text" data-bind="value: latitude" />
+            <input type="text" data-bind="value: longitude"/>
+        </div>
+    </div>
 </div>

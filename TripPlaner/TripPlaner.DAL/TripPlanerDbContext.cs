@@ -22,8 +22,6 @@ namespace TripPlaner.DAL
         
         public DbSet<Placemark> Placemarks { get; set; }
         
-        //public DbSet<Traveler> Travelers { get; set; }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
